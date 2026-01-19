@@ -18,13 +18,11 @@ This document contains all development rules and guidelines for this project, ap
 
 ## 2. Code Quality & Coverage
 
-- **MANDATORY Validation**: Before EVERY commit, run `make validate` and fix ALL errors. Zero tolerance.
+- **MANDATORY Validation**: Before EVERY commit, run `sbt compile` and fix ALL errors. Zero tolerance.
 - **Quality Requirements**: The project has strict requirements for code quality and maintainability.
 - **High Coverage**: All code must have very high test coverage; strive for 100% where practical.
 - **Pre-commit Checks**: All code must pass the following before any commit:
-    - `make check-typing`
-    - `make check-format`
-    - `make check-style`
+    - `sbt scalafmtAll`
 - **TDD Workflow**: Test-Driven Development (TDD) is the default workflow: always write tests first.
 - **OOP Design**: Use Object-Oriented Programming (OOP) for all components and features.
 
@@ -147,59 +145,14 @@ This document contains all development rules and guidelines for this project, ap
 - **Post-Pass Review**: After a test passes, review for opportunities to simplify or clarify.
 - **Helper Refactoring**: Refactor test helpers and fixtures as needed to keep the suite DRY and maintainable.
 
-### Test Reference Guides
-For detailed usage and best practices, see the following guides in `docs/testing/`:
-- **expects_guide.md**: How to use the expects library for BDD-style assertions.
-- **doublex_guide.md**: How to use doublex for mocking and stubbing.
-- **doublex_expects_guide.md**: How to integrate doublex with expects for mock assertions.
-
-These guides are the canonical resources for writing and maintaining tests in this project.
-
-## 11. Makefile Targets Usage
-
-### Core Rule
-**NEVER** call tools like `pytest`, `black`, `mypy`, or similar directly. Always use the corresponding `make` target.
-
-### Available Make Targets
-- `make help` — Show this help.
-- `make local-setup` — Sets up the local environment (e.g. install git hooks)
-- `make build` — Builds the app
-- `make update` — Updates the app packages
-- `make add-package` — Installs a new package in the app. ex: make install package=XXX
-- `make up` — Runs the app
-- `make down` — Stop the FastAPI app
-- `make check-typing` — Run a static analyzer over the code to find issues
-- `make check-format` — Checks the code format
-- `make check-style` — Checks the code style
-- `make reformat` — Format python code
-- `make test-unit` — Run all unit tests
-- `make test-e2e` — Run all e2e tests
-- `make validate` — Run tests, style, and typing checks (test-unit, check-style, check-typing)
-
-### Usage Rules
-1. **Testing**: When running tests, use `make test-unit` or `make test-e2e` as appropriate.
-2. **Formatting**: For formatting, use `make reformat` or `make check-format`.
-3. **Type Checking**: For type checking, use `make check-typing`.
-4. **Style Checks**: For style checks, use `make check-style`.
-5. **Building**: For building or updating the app, use `make build` or `make update`.
-6. **Help**: If you are unsure which target to use, run `make help` to see all available options.
-7. **New Operations**: If a new operation is needed, prefer adding a new Makefile target rather than running a tool directly.
-
-### Good vs Bad Examples
-```sh
-# Good: Use make target for unit tests
-make test-unit
-
-# Bad: Call pytest directly
-pytest tests/unit
-```
-
 ## 12. Pre-Commit Validation (MANDATORY)
 
 Before ANY commit:
-1. Run `make validate`
+1. Run `sbt compile`
 2. If errors exist: fix them and re-run
-3. Only commit when `make validate` passes with ZERO errors
+4. Run `sbt test`
+5. If errors exist: fix them and re-run
+6. Only commit when `sbt test` adn `sbt compile` passes with ZERO errors
 
 ❌ **NEVER**: Commit → discover errors → fix commit
 ✅ **ALWAYS**: Validate → fix all errors → commit once
@@ -215,9 +168,8 @@ When working on this project:
 5. **Keep code small and typed** - max 20 lines per method 📏
 6. **Show your thinking process** - be conversational and progressive 💭
 7. **Question everything** - assumptions, requirements, design choices ❓
-8. **Run `make validate` before EVERY commit** - zero tolerance ✅
-9. **Run tests automatically** after every change 🧪
-10. **Focus on simplicity** over cleverness ✨
-11. **Ask for clarification** when in doubt 🤔
+8. **Run tests automatically** after every change 🧪
+9. **Focus on simplicity** over cleverness ✨
+10. **Ask for clarification** when in doubt 🤔
 
 Remember: This is a high-quality, test-driven, incremental development environment. Quality over speed, clarity over cleverness, baby steps over big leaps. 
