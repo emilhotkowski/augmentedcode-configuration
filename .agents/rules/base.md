@@ -60,7 +60,7 @@ This document contains all development rules and guidelines for this project, ap
 
 ## 7. Language Standards
 
-- **Communication Flexibility**: Team communication can be conducted in Spanish or English for convenience and comfort.
+- **Communication Flexibility**: Team communication can be conducted in English for convenience and comfort.
 - **English-Only Artifacts**: All technical artifacts must always use English, including:
   - Code (variables, functions, classes, comments)
   - Documentation (README, guides, API docs)
